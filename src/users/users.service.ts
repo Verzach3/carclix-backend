@@ -12,4 +12,11 @@ export class UsersService {
   async create(user: User) {
     return await this.prisma.user.create({ data: user });
   }
+
+  async edit(newUser: User, id: number) {
+    return await this.prisma.user.update({
+      where: { id: id },
+      data: newUser,
+    });
+  }
 }
