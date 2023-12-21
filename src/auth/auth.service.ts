@@ -5,9 +5,10 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { validate } from 'class-validator';
-import { User } from 'src/users/users.entity';
 import { UsersService } from 'src/users/users.service';
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt";
+import { User } from '@prisma/client';
+import { registerValidator } from './auth.validations';
 @Injectable()
 export class AuthService {
   constructor(
@@ -17,7 +18,13 @@ export class AuthService {
 
   async signUp(user: User) {
     // TODO: Add aditional validations like if register is disabled
-
+    user.date_of_birth = new Date(user.date_of_birth);
+    try {
+      await registerValidator.parseAsync(user);
+    } catch (error) {
+      console.log(error);
+      throw new HttpException('Validation failed', 400);
+    }
     const existingUser = await this.usersService.findOneByEmail(user.email);
     if (existingUser) {
       throw new HttpException({ message: 'User already exists' }, 400);
@@ -34,9 +41,10 @@ export class AuthService {
     try {
       await this.usersService.create(user);
     } catch (error) {
+      console.log(error);
       throw new HttpException({ message: 'Error creating user' }, 500);
     }
-    const payload = { email: user.email, sub: user.id };
+    const payload = { email: user.email, sub: user.id, role: user.user_type };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
@@ -51,7 +59,7 @@ export class AuthService {
     if (!isMatch) {
       throw new UnauthorizedException({ message: 'Password is incorrect' });
     }
-    const payload = { email: user.email, sub: user.id };
+    const payload = { email: user.email, sub: user.id, role: user.user_type };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
