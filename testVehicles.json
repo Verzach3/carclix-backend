@@ -9,15 +9,8 @@
     "purchase_price": 20000.0,
     "details": "Compact sedan, 4 doors, automatic transmission",
     "condition_details": "Good condition, minor scratches",
-    "created_at": "2023-01-01T12:00:00",
-    "updated_at": "2023-03-01T12:00:00",
-    "VehicleImage": [
-      {
-        "id": 1,
-        "path": "/images/vehicle_1.jpg",
-        "vehicleId": 1
-      }
-    ]
+    "created_at": "2023-01-01T12:00:00"
+
   },
   {
     "id": 2,
@@ -30,14 +23,7 @@
     "details": "Pickup truck, 4WD, 5-seater",
     "condition_details": "Excellent condition, like new",
     "created_at": "2023-02-15T08:30:00",
-    "updated_at": null,
-    "VehicleImage": [
-      {
-        "id": 2,
-        "path": "/images/vehicle_2.jpg",
-        "vehicleId": 2
-      }
-    ]
+    "updated_at": null
   },
   {
     "id": 3,
@@ -49,15 +35,7 @@
     "purchase_price": 18000.0,
     "details": "Sedan, 4 doors, manual transmission",
     "condition_details": "Very good condition, regular maintenance",
-    "created_at": "2023-04-10T14:20:00",
-    "updated_at": "2023-05-20T09:30:00",
-    "VehicleImage": [
-      {
-        "id": 3,
-        "path": "/images/vehicle_3.jpg",
-        "vehicleId": 3
-      }
-    ]
+    "created_at": "2023-04-10T14:20:00"
   },
   {
     "id": 4,
@@ -69,15 +47,7 @@
     "purchase_price": 15000.0,
     "details": "Midsize sedan, automatic transmission",
     "condition_details": "Good condition, maintenance up-to-date",
-    "created_at": "2023-07-21T17:00:00",
-    "updated_at": "2023-08-11T11:00:00",
-    "VehicleImage": [
-      {
-        "id": 4,
-        "path": "/images/vehicle_4.jpg",
-        "vehicleId": 4
-      }
-    ]
+    "created_at": "2023-07-21T17:00:00"
   },
   {
     "id": 5,
@@ -90,13 +60,7 @@
     "details": "Luxury sedan, automatic transmission, leather seats",
     "condition_details": "Mint condition, low mileage",
     "created_at": "2023-09-05T16:45:00",
-    "updated_at": null,
-    "VehicleImage": [
-      {
-        "id": 5,
-        "path": "/images/vehicle_5.jpg",
-        "vehicleId": 5
-      }
-    ]
+    "updated_at": null
+    
   }
 ]

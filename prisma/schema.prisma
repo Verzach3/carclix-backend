@@ -11,25 +11,27 @@ datasource db {
 }
 
 model User {
-  id                 Int      @id @default(autoincrement())
-  first_name         String  
-  last_name          String   
+  id                 Int       @id @default(autoincrement())
+  first_name         String
+  last_name          String
   address            String
-  phone              String   
-  email              String   @unique
-  password           String   
+  phone              String
+  email              String    @unique
+  password           String
   city               String
   date_of_birth      DateTime
   gender             String
   contact_preference String
   cedula             String
-  user_type          String   // 'admin', 'seller', or 'customer'
+  user_type          String // 'admin', 'seller', or 'customer'
+  vehicles           Vehicle[]
 
   @@map("users")
 }
 
 model Vehicle {
   id                Int            @id @default(autoincrement())
+  customer          User           @relation(fields: [customer_id], references: [id])
   customer_id       Int
   vehicle_maker     String
   vehicle_model     String
@@ -53,4 +55,3 @@ model VehicleImage {
 
   @@map("vehicle_images")
 }
-
