@@ -30,6 +30,7 @@ COPY package*.json ./
 # Install only production dependencies
 RUN yarn install --production
 
+RUN npx prisma generate
 # Copy built assets from the build stage
 COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/prisma ./prisma
