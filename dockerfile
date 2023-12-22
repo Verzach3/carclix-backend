@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:14-alpine as build
+FROM node:18-alpine3.19 as build
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -8,16 +8,16 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN yarn install
 
 # Copy source files
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN yarn run build
 
 # Stage 2: Set up the production environment
-FROM node:18-bullseye
+FROM node:18-alpine3.19 as production
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -26,7 +26,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm install --only=production
+RUN yarn install --production
 
 # Copy built assets from the build stage
 COPY --from=build /usr/src/app/dist ./dist
