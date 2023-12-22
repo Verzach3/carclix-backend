@@ -30,15 +30,15 @@ COPY package*.json ./
 # Install only production dependencies
 RUN yarn install --production
 
+# Copy built assets from the build stage
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/.env ./.env
 
 RUN npx prisma generate
-# Copy built assets from the build stage
 
 # Expose port
 EXPOSE 3999
+
 
 # Run the application
 CMD ["node", "dist/main.js"]
