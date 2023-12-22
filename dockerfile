@@ -39,6 +39,7 @@ RUN npx prisma generate
 # Expose port
 EXPOSE 3999
 
+VOLUME [ "/static" ]
 
 # Run the application
 CMD ["node", "dist/main.js"]
