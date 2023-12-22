@@ -2,7 +2,7 @@
 FROM node:18-alpine3.19 as build
 
 # Set working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -22,7 +22,7 @@ RUN yarn run build
 FROM node:18-alpine3.19 as production
 
 # Set working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -32,12 +32,12 @@ RUN yarn install --production
 
 RUN npx prisma generate
 # Copy built assets from the build stage
-COPY --from=build /usr/src/app/dist ./dist
-COPY --from=build /usr/src/app/prisma ./prisma
-COPY --from=build /usr/src/app/.env ./.env
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/prisma ./prisma
+COPY --from=build /app/.env ./.env
 
 # Expose port
 EXPOSE 3999
 
 # Run the application
-CMD ["node", "dist/main"]
+CMD ["node", "dist/main.js"]
