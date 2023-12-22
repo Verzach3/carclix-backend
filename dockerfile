@@ -13,6 +13,8 @@ RUN yarn install
 # Copy source files
 COPY . .
 
+RUN npx prisma generate
+
 # Build the application
 RUN yarn run build
 
@@ -28,10 +30,9 @@ COPY package*.json ./
 # Install only production dependencies
 RUN yarn install --production
 
-RUN npx prisma generate
-
 # Copy built assets from the build stage
 COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/prisma ./prisma
 
 # Expose port
 EXPOSE 3999
