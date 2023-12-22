@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Set up the production environment
-FROM node:14-alpine
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /usr/src/app
