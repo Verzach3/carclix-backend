@@ -21,13 +21,14 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  async legin(@Body() body: { email: string; password: string }, @Res() response: Response ) {
+  async login(
+    @Body() body: { email: string; password: string },
+  ) {
     try {
-      response.status(200).send(await loginValidator.parseAsync(body));
+      await loginValidator.parseAsync(body);
     } catch (error) {
       throw new HttpException('Validation failed', 400);
     }
-
     return await this.authService.signIn(body.email, body.password);
   }
 
@@ -49,6 +50,6 @@ export class AuthController {
     const payload = await this.jwtService.verifyAsync(token, {
       secret: process.env.JWT_SECRET,
     });
-    return { permission: `${payload.role ?? "none"}`}
+    return { permission: `${payload.role ?? 'none'}` };
   }
 }
