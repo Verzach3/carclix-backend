@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { VehicleImage } from '@prisma/client';
 import { mkdir, stat, writeFile } from 'fs/promises';
 import { PrismaService } from 'src/prisma/prisma.service';
-import uuid from "uuid"
+import * as uuid from "uuid"
 @Injectable()
 export class VehicleImagesService {
   constructor(private prisma: PrismaService) {}
@@ -24,6 +24,7 @@ export class VehicleImagesService {
       'path'
     >,
   ) {
+    console.log(vehicleImages);
     try {
       await stat(process.env.IMAGES_FOLDER);
     } catch (error) {
