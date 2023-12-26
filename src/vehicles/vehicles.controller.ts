@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { Vehicle } from '@prisma/client';
 import { VehiclesService } from './vehicles.service';
 import { getPayloadFromToken } from 'src/util/getPayloadFromToken';
@@ -9,20 +17,28 @@ import { Roles } from 'src/decorators/roleDecorator';
 
 @Controller('vehicles')
 export class VehiclesController {
-    constructor(private vehicleService: VehiclesService, private jwtService: JwtService) {}
+  constructor(
+    private vehicleService: VehiclesService,
+    private jwtService: JwtService,
+  ) {}
 
-    @Roles("admin", "seller")
-    @UseGuards(AuthGuard)
-    @Post("create")
-    async createVehicle(@Req() request: Request, @Body() vehicle: Vehicle) {
-        const [type, token] = request.headers.authorization?.split(' ') ?? [];
-        console.log(vehicle);
-        const { sub } = await getPayloadFromToken(token, this.jwtService);
-        return await this.vehicleService.create(vehicle, sub);
-    }
+  @Roles('admin', 'seller')
+  @UseGuards(AuthGuard)
+  @Post('create')
+  async createVehicle(@Req() request: Request, @Body() vehicle: Vehicle) {
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    console.log(vehicle);
+    const { sub } = await getPayloadFromToken(token, this.jwtService);
+    return await this.vehicleService.create(vehicle, sub);
+  }
 
-    @Get("all")
-    async getAllVehicles() {
-        return await this.vehicleService.findMany();
-    }
+  @Get('all')
+  async getAllVehicles() {
+    return await this.vehicleService.findMany();
+  }
+
+  @Get('one/:id')
+  async getOneVehicle(@Param('id') id: number) {
+    return await this.vehicleService.findOne(id);
+  }
 }

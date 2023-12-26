@@ -11,6 +11,7 @@ export class VehiclesService {
   }
 
   async findOne(id: number) {
+    id = Number(id);
     return await this.prisma.vehicle.findUnique({
       where: { id },
     });

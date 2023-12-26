@@ -6,7 +6,6 @@ import {
   Param,
   Post,
   Res,
-  StreamableFile,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
@@ -14,8 +13,7 @@ import {
 import { VehicleImagesService } from './vehicle-images.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { VehicleImage } from '@prisma/client';
-import { mkdir, stat, writeFile } from 'fs/promises';
-import * as uuid from 'uuid';
+import { stat } from 'fs/promises';
 import { Response } from 'express';
 import { Stats, createReadStream } from 'fs';
 import { join } from 'path';
