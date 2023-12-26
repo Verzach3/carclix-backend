@@ -31,6 +31,11 @@ export class VehicleImagesController {
     return await this.vehicleImagesService.findMany();
   }
 
+  @Get('list/:id')
+  async getVehicleImages(@Param('id') id: number) {
+    return await this.vehicleImagesService.getManyByVehicleId(id);
+  }
+
   @Get("one/:id")
   async getVehicleImage(@Res() res: Response, @Param("id") id: number) {
     id = Number(id);

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { VehicleImage } from '@prisma/client';
 import { mkdir, stat, writeFile } from 'fs/promises';
 import { PrismaService } from 'src/prisma/prisma.service';
-import * as uuid from "uuid"
+import * as uuid from 'uuid';
 @Injectable()
 export class VehicleImagesService {
   constructor(private prisma: PrismaService) {}
@@ -14,6 +14,12 @@ export class VehicleImagesService {
   async getOneById(id: number) {
     return await this.prisma.vehicleImage.findUnique({
       where: { id },
+    });
+  }
+
+  async getManyByVehicleId(vehicleId: number) {
+    return await this.prisma.vehicleImage.findMany({
+      where: { vehicleId },
     });
   }
 
