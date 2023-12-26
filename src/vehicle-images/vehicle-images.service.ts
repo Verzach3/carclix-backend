@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { VehicleImage } from '@prisma/client';
 import { mkdir, stat, writeFile } from 'fs/promises';
-import path from 'path';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as uuid from 'uuid';
+import * as path from 'path';
 @Injectable()
 export class VehicleImagesService {
   constructor(private prisma: PrismaService) {}
