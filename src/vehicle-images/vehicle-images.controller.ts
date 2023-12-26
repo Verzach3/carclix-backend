@@ -47,7 +47,7 @@ export class VehicleImagesController {
     const path = vehicleImage.path;
     let file: Stats;
     try {
-        file = await stat(join(process.cwd(), process.env.IMAGES_FOLDER,path));
+        file = await stat(join(process.env.IMAGES_FOLDER,path));
     } catch (error) {
         console.log(error);
         throw new HttpException("Vehicle Image not found", 404);
@@ -56,7 +56,7 @@ export class VehicleImagesController {
       'Content-Type': 'image/png',
       'Content-Length': file.size,
     });
-    const readStream = createReadStream(join(process.cwd(), process.env.IMAGES_FOLDER,path))
+    const readStream = createReadStream(join(process.env.IMAGES_FOLDER,path))
     return readStream.pipe(res);
   }
 
