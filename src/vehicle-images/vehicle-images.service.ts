@@ -19,6 +19,7 @@ export class VehicleImagesService {
   }
 
   async getManyByVehicleId(vehicleId: number) {
+    vehicleId = Number(vehicleId);
     return await this.prisma.vehicleImage.findMany({
       where: { vehicleId },
     });
