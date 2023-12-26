@@ -30,7 +30,7 @@ COPY package*.json ./
 # Install only production dependencies
 RUN yarn install --production
 
-VOLUME [ "/static" ]
+VOLUME [ "/app/static" ]
 
 # Copy built assets from the build stage
 COPY --from=build /app/dist ./dist

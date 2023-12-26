@@ -10,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model User {
   id                 Int       @id @default(autoincrement())
   first_name         String
@@ -30,9 +31,10 @@ model User {
 }
 
 model Vehicle {
-  id                Int            @id @default(autoincrement())
+  id                Int            @id @unique @default(autoincrement())
   customer          User           @relation(fields: [customer_id], references: [id])
   customer_id       Int
+  insurance         Insurance?
   vehicle_maker     String
   vehicle_model     String
   vehicle_year      Int
@@ -54,4 +56,18 @@ model VehicleImage {
   vehicleId Int // Foreign key
 
   @@map("vehicle_images")
+}
+
+model Insurance {
+  id                Int       @id @default(autoincrement())
+  vehicle           Vehicle   @relation(fields: [vehicleId], references: [id])
+  vehicleId         Int       @unique
+  insurance_company String
+  policy_number     String
+  policy_start_date DateTime
+  policy_end_date   DateTime
+  created_at        DateTime
+  updated_at        DateTime? // Optional
+
+  @@map("insurances")
 }

@@ -1,0 +1,62 @@
+TaskTemplate:
+  ContainerSpec:
+    Labels:
+      some.label: some.value
+    Image: busybox
+    Command:
+      - ./mycommand.sh
+    Hostname: my.domain.com
+    DNSConfig:
+      Nameservers:
+         - 8.8.8.8 
+         - 8.8.4.4 
+    Mounts:
+      - Type: bind
+        Source: /host/directory
+        Target: /some/path/in/container
+        ReadOnly: true
+    Args:
+      - top
+  Resources:
+    Limits:
+      MemoryBytes: 104857600
+      NanoCPUs: 2000000000
+    Reservations:
+      MemoryBytes: 104857600
+      NanoCPUs: 2000000000
+  RestartPolicy:
+    Condition: any
+    MaxAttempts: 0
+  Placement: {}
+  Networks:
+    - Target: captain-overlay-network
+  LogDriver:
+    Name: json-file
+    Options:
+      max-size: 512m
+  ForceUpdate: 0
+Mode:
+  Replicated:
+    Replicas: 1
+UpdateConfig:
+  Parallelism: 2
+  Delay: 1000000000
+  FailureAction: pause
+  Monitor: 15000000000
+  MaxFailureRatio: 0.15
+  Order: start-first
+RollbackConfig:
+  Parallelism: 1
+  Delay: 1000000000
+  FailureAction: pause
+  Monitor: 15000000000
+  MaxFailureRatio: 0.15
+  Order: start-first
+EndpointSpec:
+  Mode: vip
+  Ports:
+    - Name: something
+      Protocol: tcp
+      TargetPort: 80
+      PublishedPort: 8080
+      PublishMode: host
