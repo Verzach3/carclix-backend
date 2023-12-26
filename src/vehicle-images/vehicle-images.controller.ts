@@ -22,7 +22,7 @@ import { join } from 'path';
 import { Roles } from 'src/decorators/roleDecorator';
 import { AuthGuard } from 'src/auth/auth.guard';
 require('dotenv').config();
-@Controller('vehicle-images')
+@Controller('vehicles/images')
 export class VehicleImagesController {
   constructor(private readonly vehicleImagesService: VehicleImagesService) {}
 
