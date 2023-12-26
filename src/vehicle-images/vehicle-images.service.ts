@@ -3,6 +3,7 @@ import { VehicleImage } from '@prisma/client';
 import { mkdir, stat, writeFile } from 'fs/promises';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as uuid from 'uuid';
+import * as path from 'path';
 @Injectable()
 export class VehicleImagesService {
   constructor(private prisma: PrismaService) {}
@@ -18,6 +19,7 @@ export class VehicleImagesService {
   }
 
   async getManyByVehicleId(vehicleId: number) {
+    vehicleId = Number(vehicleId);
     return await this.prisma.vehicleImage.findMany({
       where: { vehicleId },
     });
@@ -32,19 +34,19 @@ export class VehicleImagesService {
   ) {
     console.log(vehicleImages);
     try {
-      await stat(process.env.IMAGES_FOLDER);
+      await stat(path.join(process.env.IMAGES_FOLDER));
     } catch (error) {
       console.log('Folder not foud, creating...');
-      await mkdir(process.env.IMAGES_FOLDER);
+      await mkdir(path.join(process.env.IMAGES_FOLDER));
     }
 
     const vehicleImagesPath = [];
     vehicleImages.map(async (vehicleImage) => {
-      const imagePath = `${uuid.v4()}-${vehicleImage.originalname}`;
+      const imagePath = path.join(`${uuid.v4()}-${vehicleImage.originalname}`);
       vehicleImagesPath.push(imagePath);
       try {
         await writeFile(
-          `${process.env.IMAGES_FOLDER}/${imagePath}`,
+          path.join(`${process.env.IMAGES_FOLDER}/${imagePath}`),
           vehicleImage.buffer,
         );
       } catch (error) {
